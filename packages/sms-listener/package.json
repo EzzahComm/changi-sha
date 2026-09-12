@@ -1,0 +1,22 @@
+{
+  "name": "@changisha/sms-listener",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SMS queue listener for Changisha contribution receipts",
+  "main": "dist/changisha-listener.js",
+  "scripts": {
+    "dev": "ts-node src/changisha-listener.ts",
+    "build": "tsc",
+    "start": "node dist/changisha-listener.js",
+    "lint": "eslint src",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.112.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "ts-node": "^10",
+    "typescript": "^5"
+  }
+}
