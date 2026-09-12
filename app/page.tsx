@@ -10,13 +10,15 @@ export default function Home() {
       {/* Navbar */}
       <nav className="fixed w-full top-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-700">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+          <a href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
             Changisha
-          </div>
+          </a>
           <div className="hidden md:flex gap-8 text-sm">
             <a href="#features" className="hover:text-blue-400 transition">Features</a>
             <a href="#how-it-works" className="hover:text-blue-400 transition">How It Works</a>
             <a href="#faq" className="hover:text-blue-400 transition">FAQ</a>
+            <a href="/about" className="hover:text-blue-400 transition">About</a>
+            <a href="/blog" className="hover:text-blue-400 transition">Blog</a>
           </div>
           <a href="/campaigns/1/pledge" className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg transition font-semibold">
             Get Started
