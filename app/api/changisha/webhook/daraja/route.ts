@@ -36,11 +36,21 @@ import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 
-// Initialize Supabase client with service role key
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || "",
-  process.env.SUPABASE_SERVICE_ROLE_KEY || ""
-);
+/**
+ * Initialize Supabase client lazily to avoid build-time environment variable requirements
+ */
+function getSupabaseClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!url || !key) {
+    throw new Error(
+      "Missing Supabase configuration: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY required"
+    );
+  }
+
+  return createClient(url, key);
+}
 
 /**
  * Type definitions for Daraja callback payload
@@ -217,6 +227,7 @@ export async function POST(request: NextRequest) {
       amount: parseFloat(amount),
     });
 
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase.rpc("process_contribution", {
       p_campaign_id: campaignId,
       p_trans_id: transId,

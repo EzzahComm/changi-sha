@@ -32,12 +32,20 @@ interface SMSDispatchResult {
 }
 
 /**
- * Initialize Supabase client with service role key
+ * Initialize Supabase client lazily with service role key
  */
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || "",
-  process.env.SUPABASE_SERVICE_ROLE_KEY || ""
-);
+function getSupabaseClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!url || !key) {
+    throw new Error(
+      "Missing Supabase configuration: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY required"
+    );
+  }
+
+  return createClient(url, key);
+}
 
 /**
  * Mock SMS dispatcher
@@ -120,6 +128,8 @@ async function handleSMSQueueEvent(
       );
       return;
     }
+
+    const supabase = getSupabaseClient();
 
     // Fetch campaign details for SMS context
     const { data: campaign, error: campaignError } = await supabase
@@ -220,6 +230,8 @@ export async function startChangishaSMSListener(): Promise<
   () => Promise<void>
 > {
   console.log("[Changisha SMS Listener] Starting...");
+
+  const supabase = getSupabaseClient();
 
   // Create subscription to broadcast channel
   const subscription: RealtimeChannel = supabase
