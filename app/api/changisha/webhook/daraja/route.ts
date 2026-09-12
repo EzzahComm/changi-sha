@@ -2,11 +2,6 @@ import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
 /**
  * Daraja C2B Webhook Handler for Changisha
  *
@@ -41,6 +36,12 @@ export async function POST(request: NextRequest) {
       timestamp: new Date().toISOString(),
       path: request.nextUrl.pathname,
     });
+
+    // Initialize Supabase client
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
 
     // 1. Parse JSON payload
     const payload = await request.json();
