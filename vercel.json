@@ -2,11 +2,5 @@
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
   "installCommand": "npm install",
-  "framework": "nextjs",
-  "nodeVersion": "20.x",
-  "env": {
-    "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
-    "SUPABASE_SERVICE_ROLE_KEY": "@supabase_key",
-    "DARAJA_SECRET_KEY": "@daraja_secret"
-  }
+  "framework": "nextjs"
 }
